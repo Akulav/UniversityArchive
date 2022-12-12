@@ -1,0 +1,56 @@
+Main:
+
+db x = 5
+db y = 3
+100 z = "Hello World"
+Sum x y
+print z
+
+end Main ;
+
+Sum db a db b:
+
+db c = a + b
+print c
+
+end Sum ;
+
+
+
+; one operation per line
+; end ___ ; marks the end of function
+; : marks the start of function
+; main function can only have the name Main
+; ALL declared variables are by default integers, declaring as string require ""
+; before all declarations length type are declared {db,dw,qw}. Strings require just a number e.g {10,11,1000}. The number represents bytes. All non filled bits are 0.
+; arithmetic operators {+,-,<,>,=,*,/}.
+; all loops are goto and label based. Labels are marked with ".". Goto conditions can be {equal, nequal (notequal), lequal, hequal, lorequal, horequal, etc.}. 
+compare syntax: compare variable variable/condition, condition {even,odd,prime,null}
+e.g.
+
+.back
+db a = 0
+do something
+a++
+compare a 4
+goto nequal .back
+
+Example of factorial calculator:
+
+.Main:
+
+	a = 100
+	msg = "The factorial is equal to"
+	&Factorial a
+
+_Main;
+
+.Factorial n:
+	i = 1
+	:backLoop
+        n = n * i 
+	    i++
+        compare i n
+        goto lequal .backloop
+	print n
+_Factorial;

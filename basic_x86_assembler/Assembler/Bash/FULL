@@ -1,0 +1,18 @@
+#!/bin/sh
+nasm -fbin bootloader.asm -o bootloader.bin
+nasm -fbin kernel.asm -o kernel.bin
+
+rm -rf 1.img
+cp bootloader.bin 1.img
+dd if=/dev/zero of=1.img bs=1 count=1 seek=512
+INITIAL_SIZE=$((($1-1) * 512 - 1))
+dd if=/dev/zero of=1.img bs=1 count=1 seek=$INITIAL_SIZE
+cat "kernel.bin" >> "1.img"
+dd if=/dev/zero of=$3 bs=1 count=1 seek=1474559
+
+rm bootloader.bin
+rm kernel.bin
+rm result.bin
+qemu-system-x86_64 -drive format=raw,file=1.img
+rm 1.raw
+rm 1.img

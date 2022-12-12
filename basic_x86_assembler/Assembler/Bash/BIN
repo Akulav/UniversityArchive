@@ -1,0 +1,5 @@
+#!/bin/sh
+nasm -fbin bootloader.asm -o bootloader.bin
+nasm -fbin kernel.asm -o kernel.bin
+cat bootloader.bin kernel.bin > result.bin
+

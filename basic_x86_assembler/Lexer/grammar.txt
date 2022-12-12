@@ -1,0 +1,37 @@
+letter:  (a-z)+
+operators : =
+empty_space: " " 
+keywords: goto
+identifier:  (letter | value )* ;
+parameters:  (identifier empty_space)*  
+
+start_function: .(a-z)*
+end_function: _(a-z)*
+func_def: start_function, parameters, end_function
+label_def: :(a-z)+
+call_function_def: &(a-z)+
+
+variable_def: identifier empty_space = empty_space value
+value: AlphaNumeric
+sys_functions: CMP | DIV | DIF | SCA | MUL | PRINT | JE
+
+<CMP> : CMP | DIV | DOF | SCA | MUL | JE identifier identifier
+
+
+
+EXAMPLE PROGRAM. FACTORIAL COMPUTATION.
+
+.Main
+a = 5
+&Factorial a
+_Main
+
+Factorial num
+a = 1
+b = 1
+c = 1
+:Loop
+MUL a b
+ADD b c
+CMP b num
+JE :Loop 
